@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Brain Sync - Учи английский с удовольствием</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Splash Screen -->
+    <div id="splash-screen" class="splash-screen active">
+        <div class="splash-content">
+            <div class="splash-logo">💡</div>
+            <h1 class="splash-title">Brain Sync</h1>
+            <p class="splash-tagline" id="splash-tagline">Переводи любимые книги</p>
+        </div>
+    </div>
+
+    <!-- Экран онбординга -->
+    <div id="onboarding" class="screen active">
+        <div class="onboarding-container">
+            <div class="logo-section">
+                <div class="app-logo">💡</div>
+                <h1>Brain Sync</h1>
+                <p class="tagline">Освой живой язык быстрее: читай, смотри и учись в ритме своей жизни</p>
+            </div>
+            
+            <div class="interests-section">
+                <h2>Что тебе интересно?</h2>
+                <p class="subtitle">Выбери темы для изучения</p>
+                
+                <div class="interests-grid">
+                    <div class="interest-card" data-interest="news">
+                        <div class="interest-icon">📰</div>
+                        <h3>Новости</h3>
+                        <p>Читай актуальные новости на английском</p>
+                    </div>
+                    
+                    <div class="interest-card" data-interest="movies">
+                        <div class="interest-icon">🎬</div>
+                        <h3>Фильмы</h3>
+                        <p>Изучай английский через кино</p>
+                    </div>
+                    
+                    <div class="interest-card" data-interest="books">
+                        <div class="interest-icon">💡</div>
+                        <h3>Книги</h3>
+                        <p>Читай книги на английском</p>
+                    </div>
+                    
+                    <div class="interest-card" data-interest="tech">
+                        <div class="interest-icon">💻</div>
+                        <h3>Технологии</h3>
+                        <p>IT-новости и статьи</p>
+                    </div>
+                    
+                    <div class="interest-card" data-interest="sports">
+                        <div class="interest-icon">⚽</div>
+                        <h3>Спорт</h3>
+                        <p>Спортивные новости</p>
+                    </div>
+                    
+                    <div class="interest-card" data-interest="music">
+                        <div class="interest-icon">🎵</div>
+                        <h3>Музыка</h3>
+                        <p>Тексты песен и статьи</p>
+                    </div>
+                </div>
+                
+                <button class="btn-primary btn-large" id="start-app">Начать обучение</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Главный экран приложения -->
+    <div id="main-app" class="screen">
+        <!-- Хедер -->
+        <header class="app-header">
+            <div class="header-content">
+                <h1 class="header-title">Brain Sync</h1>
+                <div class="header-actions">
+                    <button class="icon-btn" id="settings-btn">⚙️</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Контент -->
+        <main class="app-content">
+            <!-- Главная страница -->
+            <div id="home-tab" class="tab-screen active">
+                <section class="welcome-section">
+                    <h2>Добро пожаловать! 👋</h2>
+                    <div class="streak-card">
+                        <div class="streak-icon">🔥</div>
+                        <div class="streak-info">
+                            <h3 id="streak-days">0</h3>
+                            <p>дней подряд</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="daily-content">
+                    <h3 class="section-title">Рекомендуем сегодня</h3>
+                    <div class="content-carousel" id="daily-recommendations"></div>
+                </section>
+
+                <section class="quick-practice">
+                    <h3 class="section-title">Быстрая практика</h3>
+                    <div class="practice-cards">
+                        <div class="practice-card" onclick="navigateToTab('vocabulary')">
+                            <span class="practice-icon">💬</span>
+                            <h4>Словарь</h4>
+                            <p>Повтори слова</p>
+                        </div>
+                        <div class="practice-card" onclick="navigateToTab('reading')">
+                            <span class="practice-icon">📚</span>
+                            <h4>Чтение</h4>
+                            <p>Читай статьи</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Чтение новостей -->
+            <div id="reading-tab" class="tab-screen">
+                <div class="categories-filter">
+                    <button class="category-chip active" data-category="all">Всё</button>
+                    <button class="category-chip" data-category="news">Новости</button>
+                    <button class="category-chip" data-category="tech">Технологии</button>
+                    <button class="category-chip" data-category="sports">Спорт</button>
+                </div>
+
+                <div class="articles-list" id="articles-list"></div>
+            </div>
+
+            <!-- Фильмы -->
+            <div id="movies-tab" class="tab-screen">
+                <section class="movies-section">
+                    <h3 class="section-title">Популярные фильмы</h3>
+                    <div class="movies-grid" id="movies-grid"></div>
+                </section>
+            </div>
+
+            <!-- Книги -->
+            <div id="books-tab" class="tab-screen">
+                <section class="books-section">
+                    <h3 class="section-title">Книги для изучения</h3>
+                    <div class="books-list" id="books-list"></div>
+                </section>
+            </div>
+
+            <!-- Словарь -->
+            <div id="vocabulary-tab" class="tab-screen">
+                <div class="vocabulary-header">
+                    <div class="search-box">
+                        <input type="text" id="vocab-search" placeholder="🔍 Поиск слова...">
+                    </div>
+                    <div class="vocab-stats">
+                        <span>Изучено слов: <strong id="learned-count">0</strong></span>
+                    </div>
+                </div>
+                <div class="words-list" id="words-list"></div>
+            </div>
+        </main>
+
+        <!-- Нижняя навигация -->
+        <nav class="bottom-nav">
+            <button class="nav-item active" data-tab="home-tab">
+                <span class="nav-icon">🏠</span>
+                <span class="nav-label">Главная</span>
+            </button>
+            <button class="nav-item" data-tab="reading-tab">
+                <span class="nav-icon">📰</span>
+                <span class="nav-label">Чтение</span>
+            </button>
+            <button class="nav-item" data-tab="movies-tab">
+                <span class="nav-icon">🎬</span>
+                <span class="nav-label">Фильмы</span>
+            </button>
+            <button class="nav-item" data-tab="books-tab">
+                <span class="nav-icon">💡</span>
+                <span class="nav-label">Книги</span>
+            </button>
+            <button class="nav-item" data-tab="vocabulary-tab">
+                <span class="nav-icon">💬</span>
+                <span class="nav-label">Словарь</span>
+            </button>
+        </nav>
+    </div>
+
+    <!-- Модальное окно статьи -->
+    <div id="article-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close-btn" onclick="closeArticle()">←</button>
+                <div class="modal-actions">
+                    <button class="icon-btn" id="translate-mode-btn">🔄</button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <h2 id="article-title"></h2>
+                <div class="article-meta">
+                    <span id="article-category"></span>
+                    <span id="article-date"></span>
+                </div>
+                <div id="article-content" class="article-text"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно фильма -->
+    <div id="movie-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close-btn" onclick="closeMovie()">←</button>
+            </div>
+            <div class="modal-body">
+                <div class="movie-poster" id="movie-poster"></div>
+                <h2 id="movie-title"></h2>
+                <div class="movie-info">
+                    <span id="movie-year"></span>
+                    <span id="movie-genre"></span>
+                </div>
+                <div class="movie-description" id="movie-description"></div>
+                <div class="movie-vocabulary">
+                    <h3>Полезные фразы из фильма</h3>
+                    <div id="movie-phrases"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
